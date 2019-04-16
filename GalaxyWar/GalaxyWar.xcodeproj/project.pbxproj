@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F2653C8F226486AB00CC497C /* bullet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F2653C8D226486AB00CC497C /* bullet.mp3 */; };
+		F23CE2262265EB5400E4DCE3 /* bullet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F23CE2252265EB5400E4DCE3 /* bullet.mp3 */; };
+		F23CE2282265ECCD00E4DCE3 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = F23CE2272265ECCD00E4DCE3 /* MainMenu.sks */; };
+		F23CE22E2265F2D100E4DCE3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CE22D2265F2D100E4DCE3 /* MainMenu.swift */; };
 		F2653C90226486AB00CC497C /* vzriv.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F2653C8E226486AB00CC497C /* vzriv.mp3 */; };
 		F2653C9B226488EF00CC497C /* Vzriv.sks in Resources */ = {isa = PBXBuildFile; fileRef = F2653C99226488EF00CC497C /* Vzriv.sks */; };
 		F2653C9E22648A0900CC497C /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = F2653C9D22648A0900CC497C /* Starfield.sks */; };
@@ -41,7 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F2653C8D226486AB00CC497C /* bullet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bullet.mp3; path = "../../Файлы/bullet.mp3"; sourceTree = "<group>"; };
+		F23CE2252265EB5400E4DCE3 /* bullet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bullet.mp3; path = "../../Файлы/bullet.mp3"; sourceTree = "<group>"; };
+		F23CE2272265ECCD00E4DCE3 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		F23CE22D2265F2D100E4DCE3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		F2653C8E226486AB00CC497C /* vzriv.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = vzriv.mp3; path = "../../Файлы/vzriv.mp3"; sourceTree = "<group>"; };
 		F2653C99226488EF00CC497C /* Vzriv.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Vzriv.sks; path = "../../Файлы/Vzriv.sks"; sourceTree = "<group>"; };
 		F2653C9D22648A0900CC497C /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Starfield.sks; path = "../../Файлы/Starfield.sks"; sourceTree = "<group>"; };
@@ -117,11 +121,13 @@
 				F2FC0D2222647C5F00762D75 /* GameScene.swift */,
 				F2FC0D2422647C5F00762D75 /* GameViewController.swift */,
 				F2FC0D2622647C5F00762D75 /* Main.storyboard */,
+				F23CE2272265ECCD00E4DCE3 /* MainMenu.sks */,
+				F23CE22D2265F2D100E4DCE3 /* MainMenu.swift */,
 				F2FC0D2922647C6000762D75 /* Assets.xcassets */,
 				F2653C9D22648A0900CC497C /* Starfield.sks */,
+				F23CE2252265EB5400E4DCE3 /* bullet.mp3 */,
 				F2653C99226488EF00CC497C /* Vzriv.sks */,
 				F2653C8E226486AB00CC497C /* vzriv.mp3 */,
-				F2653C8D226486AB00CC497C /* bullet.mp3 */,
 				F2FC0D2B22647C6000762D75 /* LaunchScreen.storyboard */,
 				F2FC0D2E22647C6000762D75 /* Info.plist */,
 			);
@@ -251,13 +257,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2FC0D2822647C5F00762D75 /* Main.storyboard in Resources */,
+				F23CE2262265EB5400E4DCE3 /* bullet.mp3 in Resources */,
 				F2653C9B226488EF00CC497C /* Vzriv.sks in Resources */,
+				F23CE2282265ECCD00E4DCE3 /* MainMenu.sks in Resources */,
 				F2FC0D1F22647C5F00762D75 /* GameScene.sks in Resources */,
 				F2653C90226486AB00CC497C /* vzriv.mp3 in Resources */,
 				F2FC0D2A22647C6000762D75 /* Assets.xcassets in Resources */,
 				F2FC0D2D22647C6000762D75 /* LaunchScreen.storyboard in Resources */,
 				F2653C9E22648A0900CC497C /* Starfield.sks in Resources */,
-				F2653C8F226486AB00CC497C /* bullet.mp3 in Resources */,
 				F2FC0D2122647C5F00762D75 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +293,7 @@
 				F2FC0D2322647C5F00762D75 /* GameScene.swift in Sources */,
 				F2FC0D2522647C5F00762D75 /* GameViewController.swift in Sources */,
 				F2FC0D1D22647C5F00762D75 /* AppDelegate.swift in Sources */,
+				F23CE22E2265F2D100E4DCE3 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
