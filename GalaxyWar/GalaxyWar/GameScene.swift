@@ -22,8 +22,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {// SKPhysicsContactDelegate 
     
     var gameTimer: Timer! //Таймер вызова ф-ии в которой находятся враги. Для создания врагов через определенный промежуток времени
     var aliens = ["alien1", "alien2", "alien3"]//Массив картинок для отображения врагов
-    let alienCategory: UInt32 = 0x1 << 1//Создание значений с уникальным ID
-    let bulletCategory: UInt32 = 0x1 << 0//Также уникальное ID но отличное от alienCategory
+    let alienCategory: UInt32 = 0x1 << 2//Создание значений с уникальным ID
+    let bulletCategory: UInt32 = 0x1 << 1//Также уникальное ID но отличное от alienCategory
+    let playerCategoty: UInt32 = 0
     let motionManeger = CMMotionManager()//Для управления акселерометром
     var xAccelerate: CGFloat = 0//Акселерометр по Х(сила отклонения)
     
@@ -38,15 +39,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {// SKPhysicsContactDelegate 
         
         //Mark 1.2 Работа с игроком
         player = SKSpriteNode(imageNamed: "shuttle")//Передали sprite/изображение
-        player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 100)//Позиция на экране.
-        //player.setScale(2)///Увеличение в 2 раза размера на экране игрока
+        player.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 200)//Позиция на экране.
+        player.setScale(1.5)///Увеличение в 1.5 раза размера на экране игрока
         self.addChild(player)//Добавление игрока на экран
         
-        //Mark 1.3 Работа с физическими свойствами
+      //Mark 1.3 Прикосновение игрока с врагом
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)//Физ. размер игрока для попадания в него в виде Квадрата/rectangleOf
+        player.physicsBody?.isDynamic = true//Отслеживание прикосновения динамическое
+        player.physicsBody?.categoryBitMask = playerCategoty//Передали уникальное ID игроку
+        player.physicsBody?.contactTestBitMask = alienCategory//Контакт. Прикоснулся ли враг alienCategory к игроку playerCategory
+        player.physicsBody?.collisionBitMask = 0
+        player.physicsBody?.usesPreciseCollisionDetection = true//Здесь игрок физически соприкасается с врагом и отслеживается
+        func startsWhenTouched(_ contact: SKPhysicsContact) {//Ф-ия вызывается при прикосновении
+            var alienBody: SKPhysicsBody
+            var playerBody: SKPhysicsBody
+            if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask{//Проверка. Если bodyA больше чем BodyB то это игрок (playerCategory=0), если меньше то враг (alienCategory=2). См верх кода
+                playerBody = contact.bodyA
+                alienBody = contact.bodyB
+            }else{//Если иначе, меньше то:
+                playerBody = contact.bodyB
+                alienBody = contact.bodyA
+            }
+            if (alienBody.categoryBitMask & alienCategory) != 0 && (playerBody.categoryBitMask & playerCategoty) != 0 {//Если игрок и враг прикоснултсь вызываем ф-ию collisionElements
+                collisionPlayer(playerNode: playerBody.node as! SKSpriteNode, alienNode: alienBody.node as! SKSpriteNode)
+            }
+        }
+        func collisionPlayer(playerNode: SKSpriteNode, alienNode: SKSpriteNode){//Дополнительная ф-ия принимает игрока и врага
+            let explosion = SKEmitterNode(fileNamed: "Vzriv")//При соприкосновении анимация взрыва
+            explosion?.position = playerNode.position//Позиция запуска анимации
+            self.addChild(explosion!)//Добавиление взрыва на экран
+            self.run(SKAction.playSoundFileNamed("vzriv.mp3", waitForCompletion: false))//Добавление звука
+            playerNode.removeFromParent()//Удаление после прикосновения
+            alienNode.removeFromParent()
+        
+//НАДО ПЕРЕЙТИ В ЭКРАН МЕНЮ
+        }
+        
+        //Mark 1.4 Работа с физическими свойствами
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)//Отключаем гравитацию
         self.physicsWorld.contactDelegate = self//Отслеживает соприкосновения с игроком
         
-        //Mark 1.4 Характеристик для надписи на экране scoreLabel
+        //Mark 1.5 Характеристик для надписи на экране scoreLabel
         scoreLabel = SKLabelNode(text: "Счет: 0")//Изначально счет 0
         scoreLabel.fontName = "AppleSDGothicNeo-Thin"//Характеристики шрифта
         scoreLabel.fontSize = 60//Размер шрифта
@@ -55,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {// SKPhysicsContactDelegate 
         score = 0//Сама переменная = 0
         self.addChild(scoreLabel)//Добавление на экран scoreLabel/счет
         
-        //Mark 1.5 Управлению сложностью игры
+        //Mark 1.6 Управлению сложностью игры
         var timeInterval = 0.75//Временной интервал
         if UserDefaults.standard.bool(forKey: "hard"){
             timeInterval = 0.3
@@ -65,7 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {// SKPhysicsContactDelegate 
         
         //gameTimer = Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)//Инициализация переменной. timeInterval/интервал вызова ф-ии,target/цель, selector/ф-ия которая вызывается, userInfo/информация игрока которая должна быть показана, repeats/будет ли действие повторяться. Это время появления врагов
         
-        //Mark 1.6 Работа с акселерометром
+        //Mark 1.7 Работа с акселерометром
         motionManeger.accelerometerUpdateInterval = 0.2//accelerometerUpdateInterval/Как часто проверять значение
         motionManeger.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in//Если есть данные с акселерометра то
             if let accelerometrData = data {//Берем данные из data
@@ -160,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {// SKPhysicsContactDelegate 
         }
         
         //Mark 4.1 Проверка кто с кем соприкоснулся
-        if (alienBody.categoryBitMask & alienCategory) != 0 && (bulletBody.categoryBitMask & bulletCategory) != 0 {//Если враг и выстрел вызываем ф-ию collisionElements
+        if (alienBody.categoryBitMask & alienCategory) != 1 && (bulletBody.categoryBitMask & bulletCategory) != 1 {//Если враг и выстрел вызываем ф-ию collisionElements
             collisionElements(bulletNode: bulletBody.node as! SKSpriteNode, alienNode: alienBody.node as! SKSpriteNode)
         }
     }
